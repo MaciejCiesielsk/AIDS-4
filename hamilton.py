@@ -12,6 +12,7 @@ class Hamilton:
         if self.saturation < 0 or self.saturation > 100:
             print("Saturation must be between 0 and 100.")
             return None
+        
         graph = [[0 for _ in range(self.n)] for _ in range(self.n)]
         
         cycle = [i for i in range(self.n)]
@@ -81,6 +82,8 @@ class Hamilton:
             graph[i][isolated_vertex] = 0
         
         return graph
+
+        
     def print_non_hamilton_matrix(self):
         if self.graph is None:
             print("Graph is not generated.")

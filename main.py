@@ -16,6 +16,9 @@ args = parser.parse_args()
 
 if args.hamilton:
     saturation = float(input("Enter saturation: "))
+    if saturation != 30 and saturation != 70:
+        print("Saturation must be either 30 or 70.")
+        sys.exit(1)
     nodes = int(input("Enter number of nodes: "))
     generation = Hamilton(nodes, saturation)
     print("Type Help for list of commands")
