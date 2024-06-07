@@ -35,7 +35,12 @@ if args.hamilton:
         if action == "euler":
             print(generation.find_eulerian_cycle())
             continue
-
+        if action=="hamilton":
+            generation.find_hamilton_cycle()
+            continue
+        if action == "export":
+            generation.export_to_tikz(os.path.join(CURRENT_DIR, f"tikzpicture.txt"))
+            continue
         if action == "exit":
             break
 elif args.non_hamilton:
@@ -58,6 +63,12 @@ elif args.non_hamilton:
             continue
         if action == "euler":
             print(generation.find_eulerian_cycle())
+            continue
+        if action=="hamilton":
+            generation.find_hamilton_cycle()
+            continue
+        if action == "export":
+            generation.export_to_tikz(os.path.join(CURRENT_DIR, f"tikzpicture.txt"))
             continue
 
         if action == "exit":
