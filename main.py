@@ -20,7 +20,8 @@ if args.hamilton:
         print("Saturation must be either 30 or 70.")
         sys.exit(1)
     nodes = int(input("Enter number of nodes: "))
-    generation = Hamilton(nodes, saturation)
+    type = "hamilton"
+    generation = Hamilton(nodes, saturation,type)
     print("Type Help for list of commands")
     while True:
         action = input('action> ').lower()
@@ -39,7 +40,7 @@ if args.hamilton:
             print(generation.find_eulerian_cycle())
             continue
         if action=="hamilton":
-            generation.find_hamilton_cycle()
+            generation.find_hamilton_cycle(type)
             continue
         if action == "export":
             generation.export_to_tikz(os.path.join(CURRENT_DIR, f"tikzpicture.txt"))
@@ -49,7 +50,8 @@ if args.hamilton:
 elif args.non_hamilton:
     nodes = int(input("Enter number of nodes: "))
     saturation = 50
-    generation = Hamilton(nodes, saturation)
+    type = "non_hamilton"
+    generation = Hamilton(nodes, saturation, type)
     print("Type Help for list of commands")
     while True:
         action = input('action> ').lower()
@@ -68,7 +70,7 @@ elif args.non_hamilton:
             print(generation.find_eulerian_cycle())
             continue
         if action=="hamilton":
-            generation.find_hamilton_cycle()
+            generation.find_hamilton_cycle(type)
             continue
         if action == "export":
             generation.export_to_tikz(os.path.join(CURRENT_DIR, f"tikzpicture.txt"))
@@ -76,5 +78,3 @@ elif args.non_hamilton:
 
         if action == "exit":
             break
-
-

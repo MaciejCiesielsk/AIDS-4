@@ -3,10 +3,13 @@ import math
 
 
 class Hamilton:
-    def __init__(self, n, saturation):
+    def __init__(self, n, saturation, type):
         self.n = n
         self.saturation = saturation
-        self.graph = self.create_graph()
+        if type == "hamilton":
+            self.graph = self.create_graph()
+        elif type =="non_hamilton":
+            self.graph = self.create_non_hamilton_graph()
 
     def create_graph(self):
         if self.saturation < 0 or self.saturation > 100:
@@ -30,6 +33,18 @@ class Hamilton:
                 graph[u][v] = 1
                 graph[v][u] = 1
                 num_edges -= 1
+        
+        for i in range(self.n):
+            degree = sum(graph[i])
+            while degree % 2 != 0:
+                u = random.randint(0, self.n-1)
+                v = random.randint(0, self.n-1)
+                if u != v and graph[u][v] == 0:
+                    graph[u][v] = 1
+                    graph[v][u] = 1
+                    degree += 2
+                else:
+                    break
         
         return graph
     
@@ -56,10 +71,14 @@ class Hamilton:
         visited = [False for _ in range(self.n)]
         cycle = []
         self.find_eulerian_cycle_util(0, visited, cycle)
-        return cycle
+        if len(cycle) == 0: 
+            print("Eulerian cycle doesn't exist.")
+        else:
+            return cycle
     
     def create_non_hamilton_graph(self):
         graph = [[0 for _ in range(self.n)] for _ in range(self.n)]
+        
         cycle = [i for i in range(self.n)]
         cycle.append(0)
         for i in range(self.n):
@@ -93,12 +112,16 @@ class Hamilton:
         for i, row in enumerate(self.graph, start=1):
             print(f"{i} | {'  '.join(str(int(cell)) for cell in row)}")
 
-    def find_hamilton_cycle(self):
+    def find_hamilton_cycle(self, type):
         visited = [False for _ in range(self.n)]
         path = []
         path.append(0)
+        visited[0] = True
+        if type == "non_hamilton":
+            print("Hamiltonian cycle doesn't exist.")
+            return False
         if not self.hamilton_cycle_util(path, visited):
-            print("No Hamiltonian cycle exists.")
+            print("Hamiltonian cycle doesn't exist.")
             return False
         print("Hamiltonian cycle exists:")
         for vertex in path:
@@ -128,7 +151,7 @@ class Hamilton:
         if visited[v]:
             return False
         return True
-    
+        
 
     def export_to_tikz(self, file_path):
         with open(file_path, "w") as file:
